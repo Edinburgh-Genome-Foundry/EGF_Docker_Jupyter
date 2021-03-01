@@ -1,4 +1,4 @@
-FROM jupyter/base-notebook:python-3.6
+FROM jupyter/minimal-notebook
 USER jovyan
 
 WORKDIR /usr/src/app
