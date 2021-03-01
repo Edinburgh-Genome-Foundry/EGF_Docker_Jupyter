@@ -20,7 +20,7 @@ Mac OS: https://docs.docker.com/docker-for-mac/install/
 
 Run the below in a terminal. Pull a standard Jupyter notebook *image:*
 ```
-docker pull jupyter/minimal-notebook
+docker pull jupyter/base-notebook
 ```
 
 Run the image:
