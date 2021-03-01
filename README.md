@@ -41,9 +41,9 @@ docker build --tag egf-notebook .
 
 By default, the notebooks and the work are not saved in the host filesystem, therefore we run the notebook with a couple of options that *bind mount* a directory on the filesystem, and set proper access permissions so that it will remain editable by both Docker (Jupyter) and the OS user:
 ```
-docker run --rm -p 8888:8888 --name egf-notebook -e NB_UID=1001 -e NB_GID=1001 -e CHOWN_HOME=yes -e CHOWN_EXTRA_OPTS='-R' --user root -w /home/jovyan/ -v /path/to/notebooks/on/host/:/home/jovyan/ egf-notebook
+docker run --rm -p 8888:8888 --name egf-notebook -e JUPYTER_ENABLE_LAB=yes -e NB_UID=1001 -e NB_GID=1001 -e CHOWN_HOME=yes -e CHOWN_EXTRA_OPTS='-R' --user root -w /home/jovyan/ -v /path/to/notebooks/on/host/:/home/jovyan/ egf-notebook
 ```
-Where `NB_UID` and `NB_GID` values are your user and group ids. Obtain with `cat /etc/passwd` (on Ubuntu); `egf-notebook` is the image name, as specified during build. List images with `docker image ls`. Other options used here:
+Where `NB_UID` and `NB_GID` values are your user and group ids. Obtain with `cat /etc/passwd` (on Ubuntu); `egf-notebook` is the image name, as specified during build. Environment variable `JUPYTER_ENABLE_LAB=yes` is set [in accordance with recommendations](https://github.com/jupyter/docker-stacks#jupyter-notebook-deprecation-notice). List images with `docker image ls`. Other options used here:
 ```
 -e, --env list               Set environment variables
 --name string                Assign a name to the container
@@ -57,4 +57,4 @@ Where `NB_UID` and `NB_GID` values are your user and group ids. Obtain with `cat
 
 ## Details
 
-The Dockerfile uses the `jupyter/minimal-notebook` image and installs EGF packages as listed in `requirements.txt`,in the way [advised here](https://github.com/docker-library/docs/tree/master/python#how-to-use-this-image).
+The Dockerfile uses the `jupyter/minimal-notebook` image and installs EGF packages as listed in `requirements.txt`, in the way [advised here](https://github.com/docker-library/docs/tree/master/python#how-to-use-this-image).
