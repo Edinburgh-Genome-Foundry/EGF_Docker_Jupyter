@@ -1,0 +1,4 @@
+dioscuri
+weasyprint==51
+pdf_reports
+plateo
