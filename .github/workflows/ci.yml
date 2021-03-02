@@ -1,32 +1,20 @@
 name: build
-on:
-  push:
-    branch:
-      - master
+on: workflow_dispatch
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: Build the image
+    runs-on: ubuntu-18.04
     steps:
-      - uses: actions/checkout@master
-        with:
-          name: jupyter/docker-stacks
-      - name: "Build base-notebook:python-3.6 Docker image"
-        run: |
-          docker build --rm --force-rm \
-            -t jupyter/base-notebook:python-3.6 ./base-notebook \
-            --build-arg PYTHON_VERSION=3.6
-      - uses: actions/checkout@main
-      - name: "Build egf-notebook:python-3.6 Docker image"
-        run: |
-          docker build . \
-            --tag ghcr.io/${{ github.repository }}:latest \
-            --tag ghcr.io/${{ github.repository }}:v0.1.0
-      - name: "Login to GitHub container registry"
-        run: |
-          echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io \
-            --username ${{ github.repository_owner }} \
-            --password-stdin
-      - name: "Release Docker image"
-        run: |
-          docker push ghcr.io/${{ github.repository }}:latest
-          docker push ghcr.io/${{ github.repository }}:v0.1.0
+    - name: "Build egf-notebook Docker image"
+      uses: actions/checkout@v2
+      run: |
+        docker build . \
+          --tag ghcr.io/${{ github.repository }}:v0.1.0
+    - name: "Login to GitHub container registry"
+      run: |
+        echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io \
+          --username ${{ github.repository_owner }} \
+          --password-stdin
+    - name: "Release Docker image"
+      run: |
+        docker push ghcr.io/${{ github.repository }}:v0.1.0
