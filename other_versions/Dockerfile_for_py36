@@ -1,4 +1,4 @@
-FROM jupyter/base-notebook
+FROM jupyter/base-notebook:python-3.6
 
 ############################
 # This section is from CUBA:
@@ -30,9 +30,9 @@ RUN pip install Numberjack
 RUN pip install pygraphviz==1.5 --install-option="--include-path=/usr/include/graphviz" --install-option="--library-path=/usr/lib/x86_64-linux-gnu/graphviz"
 ############################
 
-# WORKDIR /usr/src/app
-# COPY requirements.txt ./
-# RUN pip install --no-cache-dir -r requirements.txt
+WORKDIR /usr/src/app
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
 
-# # First import downloads the datasets:
-# RUN python -c "import tatapov"
+# First import downloads the datasets:
+RUN python -c "import tatapov"
