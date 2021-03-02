@@ -5,8 +5,9 @@ jobs:
     name: Build the image
     runs-on: ubuntu-18.04
     steps:
-    - name: "Build egf-notebook Docker image"
+    - name: "Check out repo"
       uses: actions/checkout@v2
+    - name: "Build egf-notebook Docker image"
       run: |
         docker build . \
           --tag ghcr.io/${{ github.repository }}:v0.1.0
