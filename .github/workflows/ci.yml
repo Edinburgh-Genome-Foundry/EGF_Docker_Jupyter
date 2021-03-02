@@ -10,7 +10,7 @@ jobs:
     - name: "Build egf-notebook Docker image"
       run: |
         docker build . \
-          --tag ghcr.io/${{ github.repository }}:v0.1.0
+          --tag ghcr.io/edinburgh-genome-foundry/egf_docker_jupyter/egf-notebook:v0.1.0
     - name: "Login to GitHub container registry"
       run: |
         echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io \
@@ -18,4 +18,4 @@ jobs:
           --password-stdin
     - name: "Release Docker image"
       run: |
-        docker push ghcr.io/${{ github.repository }}:v0.1.0
+        docker push ghcr.io/edinburgh-genome-foundry/egf_docker_jupyter/egf-notebook:v0.1.0
