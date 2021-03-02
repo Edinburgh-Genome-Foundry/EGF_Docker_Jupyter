@@ -19,5 +19,5 @@ jobs:
           --tag ghcr.io/edinburgh-genome-foundry/egf_docker_jupyter/egf-notebook:v0.1.1
     - name: "Release Docker image"
       run: |
-        docker push ghcr.io/edinburgh-genome-foundry/egf_docker_jupyter/egf-notebook:latest \
+        docker push ghcr.io/edinburgh-genome-foundry/egf_docker_jupyter/egf-notebook:latest
         docker push ghcr.io/edinburgh-genome-foundry/egf_docker_jupyter/egf-notebook:v0.1.1
