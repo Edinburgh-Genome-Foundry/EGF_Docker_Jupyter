@@ -7,13 +7,14 @@ jobs:
     steps:
     - name: "Check out repo"
       uses: actions/checkout@v2
+
     - name: "Build egf-notebook Docker image"
       run: |
         docker build . \
           --tag ghcr.io/edinburgh-genome-foundry/egf_docker_jupyter/egf-notebook:v0.1.0
     - name: "Login to GitHub container registry"
       run: |
-        echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io \
+        echo ${{ secrets.CR_PAT }} | docker login ghcr.io \
           --username ${{ github.repository_owner }} \
           --password-stdin
     - name: "Release Docker image"
