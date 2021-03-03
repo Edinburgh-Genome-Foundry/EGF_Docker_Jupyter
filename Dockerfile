@@ -1,7 +1,6 @@
 FROM ghcr.io/edinburgh-genome-foundry/egf_docker_jupyter/base-notebook@sha256:205ebe88f56a77bfe5c8c901f86ad59befe26e8e7f80de63ceae4824871f5838
 
-
-############################
+###############################################################################
 # This section is from CUBA:
 # The next lines install wkhtmltopdf (for Caravagene)
 ENV QT_QPA_PLATFORM offscreen
@@ -20,16 +19,25 @@ RUN apt-get install -y graphviz graphviz-dev libgraphviz-dev
 # The next line installs NCBI BLAST (for GeneBlocks, DNAWeaver, etc.)
 RUN apt-get install -y ncbi-blast+
 # The next line enables to build NumberJack (used by GoldenHinges)
-RUN apt-get install -y python-dev swig libxml2-dev zlib1g-dev libgmp-dev
+RUN apt-get install -y python-dev libxml2-dev zlib1g-dev libgmp-dev
+# Ubuntu 20.04 has swig version 4 but we need version 3 to install Numberjack properly:
+RUN apt-get remove -y swig
+RUN apt-get install -y swig3.0
+RUN ln /usr/bin/swig3.0 /usr/bin/swig
 # For python-Levenshtein:
 RUN apt-get install -y gcc python3-dev
-# Numberjack is veeery slow to install,
-# It has its own Docker line so changes in other lines don't reinstall it:
+RUN apt-get install -y libxslt1-dev g++
+###############################################################################
+# Numberjack is built from source because pip doesn't install it properly:
 USER jovyan
-RUN pip install Numberjack
+RUN wget https://github.com/Edinburgh-Genome-Foundry/Numberjack/archive/v1.2.0.tar.gz
+RUN tar -zxvf v1.2.0.tar.gz
+WORKDIR $HOME/Numberjack-1.2.0
+RUN python setup.py build -solver Mistral
+RUN python setup.py install
+
 # Default cannot find graphviz so path is specified:
 RUN pip install pygraphviz==1.5 --install-option="--include-path=/usr/include/graphviz" --install-option="--library-path=/usr/lib/x86_64-linux-gnu/graphviz"
-############################
 
 WORKDIR /usr/src/app
 COPY requirements.txt ./

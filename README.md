@@ -2,6 +2,7 @@
 
 Docker Jupyter images with (almost) all EGF packages for running them in a Jupyter notebook.
 
+
 ## TLDR
 
 ```
@@ -73,7 +74,6 @@ The github actions workflow creates an egf-notebook image and uploads privately 
 The Dockerfile builds from a custom base-notebook image, based on `jupyter/base-notebook`, and installs EGF packages as listed in `requirements.txt`, in the way [advised here](https://github.com/docker-library/docs/tree/master/python#how-to-use-this-image).
 
 
-
 ### Build the custom base-notebook:python-3.6 image
 
 Steps showing how the base image was built are below.
@@ -103,28 +103,28 @@ We pull this image during the build process.
 
 ## Alternative approaches
 
-## Local builds
+### Local builds
 
-We build an image that contains EGF packages, on top of a custom base-notebook. A custom base image with Python v3.6 is used, because EGF packages were developed on it.
+We build the EGF image locally, *in the directory of the cloned repo.*
 
 
-### Build the EGF notebook image
+#### Build the EGF notebook image
 
-Build the EGF image locally, *from this repo:*
+We build on top of a custom base-notebook image with Python v3.6, because EGF packages were developed on it:
 ```
 docker build --tag egf-notebook .
 ```
 Then run as shown above with the locally built image: `egf-notebook`.
 
 
-### Build from jupyter/base-notebook
+#### Build from jupyter/base-notebook
 
 Alternatively, build the EGF image directly from the original base image with the latest Python:
 replace the first line (`FROM ...`) in the Dockerfile with `FROM jupyter/base-notebook`.
 The path to the Dockerfile can be specified with `--file` (or `-f`) if not in current directory.
 
 
-### Build with multiple conda environments
+#### Build with multiple conda environments
 
 See [Contributed Recipes: Add a Python 3.x environment](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/recipes.html#add-a-python-3-x-environment). However, this approach didn't work as the Python kernel was not visible in JupyterLab.
 
