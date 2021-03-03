@@ -42,6 +42,3 @@ RUN pip install pygraphviz==1.5 --install-option="--include-path=/usr/include/gr
 WORKDIR /usr/src/app
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
-
-# First import downloads the datasets:
-RUN python -c "import tatapov"
