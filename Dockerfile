@@ -1,5 +1,4 @@
-FROM ghcr.io/edinburgh-genome-foundry/egf_docker_jupyter/base-notebook@sha256:205ebe88f56a77bfe5c8c901f86ad59befe26e8e7f80de63ceae4824871f5838
-
+FROM jupyter/base-notebook:python-3.9.12
 ###############################################################################
 # This section is from CUBA:
 # The next lines install wkhtmltopdf (for Caravagene)
@@ -38,6 +37,8 @@ RUN python setup.py install
 
 # Default cannot find graphviz so path is specified:
 RUN pip install pygraphviz==1.5 --install-option="--include-path=/usr/include/graphviz" --install-option="--library-path=/usr/lib/x86_64-linux-gnu/graphviz"
+# For proglog:
+RUN pip install ipywidgets
 
 WORKDIR /usr/src/app
 COPY requirements.txt ./
