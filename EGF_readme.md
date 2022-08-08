@@ -59,19 +59,19 @@ Push to ghcr.io:
 docker push ghcr.io/edinburgh-genome-foundry/egf_docker_jupyter/base-notebook:python-3.6
 ```
 
-We pull this image during the build process.
+Now we can pull this image during the build process.
 
 ### Build egf-notebook
 
 #### Build egf-notebook using the custom base image
 
-We build on top of a custom base-notebook image with Python v3.6, because EGF packages were developed on it:
+Previously, we built on top of a custom base-notebook image with Python v3.6, because EGF packages were developed on it:
 
 ```shell
 docker build --tag egf-notebook .
 ```
 
-Then run as shown above with the locally built image: `egf-notebook`.
+Then ran as shown above with the locally built image: `egf-notebook`.
 
 #### Build from jupyter/base-notebook
 
