@@ -1,6 +1,6 @@
 # EGF + Docker + Jupyter
 
-![version](https://img.shields.io/badge/current_version-0.2.0-blue)
+![version](https://img.shields.io/badge/current_version-0.2.1-blue)
 
 Docker Jupyter images with (almost) all EGF packages for running them in a Jupyter notebook.
 
