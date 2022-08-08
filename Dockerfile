@@ -1,4 +1,7 @@
 FROM jupyter/base-notebook:python-3.9.12
+# This actually uses Python v3.9.13
+# not using a custom image as that cannot be downloaded without EGF GHCR access
+# See details: https://github.com/jupyter/docker-stacks/issues/1763
 ###############################################################################
 # This section is from CUBA:
 # The next lines install wkhtmltopdf (for Caravagene)
@@ -26,6 +29,8 @@ RUN ln /usr/bin/swig3.0 /usr/bin/swig
 # For python-Levenshtein:
 RUN apt-get install -y gcc python3-dev
 RUN apt-get install -y libxslt1-dev g++
+# For PDF reports:
+RUN apt-get install -y fonts-inconsolata
 ###############################################################################
 # Numberjack is built from source because pip doesn't install it properly:
 USER jovyan
@@ -43,3 +48,13 @@ RUN pip install ipywidgets
 WORKDIR /usr/src/app
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
+########################################################################################
+# Opencontainer labels
+LABEL org.opencontainers.image.title="egf-notebook"
+LABEL org.opencontainers.image.description="Docker Jupyter images with (almost) all EGF packages"
+LABEL org.opencontainers.image.url="https://github.com/edinburgh-genome-foundry/egf_docker_jupyter"
+LABEL org.opencontainers.image.documentation="https://github.com/edinburgh-genome-foundry/egf_docker_jupyter"
+LABEL org.opencontainers.image.source="https://github.com/edinburgh-genome-foundry/egf_docker_jupyter"
+LABEL org.opencontainers.image.vendor="edinburgh-genome-foundry"
+LABEL org.opencontainers.image.authors="Peter Vegh"
+LABEL org.opencontainers.image.revision="v0.2.0"
